@@ -9,6 +9,7 @@ Luka Horvat, redreaper132@gmail.com
 int main ( int argc, char* args[] )
 {
 	//Initilize the framework, false -> windowed
+	//Some comment
 	frm::initialize("Framework", 640, 480, false );
 
 	//Create image and load file into it
