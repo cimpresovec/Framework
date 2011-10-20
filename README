@@ -1,0 +1,88 @@
+A C++ SDL/OpenGL/FMOD?/Box2D? Framework
+Started by Luka Horvat (redreaper132(at)gmail.com)
+Framework start date: April 2011
+
+Currently works on Windows/Linux.
+
+-----FILES-----
+Luka.h -> framework header file
+Luka.cpp -> framework file
+Main.cpp -> main game loop for testing the framework
+
+-----TODO-----
+
+->Global:
+	-Add FMOD EX to initialization ( I only know the old FMOD 3 )
+	-Add a loading function for sounds and music if needed
+	-Make better sprite rendering function (2D sprites)
+	-Ask people what to add -> profit? :D
+	-Add Box2D?!?
+
+->Up next:
+	-Add setup functions for classed, so they can be set after 
+construciton	
+	
+
+-----CHANGELOG-----
+-->20.11.2011<--
++Comments
+
+-->8.9.2011<--
++Fixed calculateAngle function, works now
+
+-->4.7.2011<--
++Added loadImage function to Image class, so that you don't have to load images when constructing
+
+-->29.6.2011<--
++Added Image class
++Image class loads image
++Changed the rect class so that you can bind an image to it, a rect with an binded image to it will always be textured
+NOTE: Image class is still MUCH WORK IN PROGRESS, it's super simple for now and only works with normal rects
+
+-->9.6.2011<--
++FTGL library added, set #define FONT to 0 in "Luka.h" if you don't want to use it
++Change in scaleScreen()
++Added testing for VisualStudio (isn't tested yet)
++renderText() function for rendering text using a pre-loaded font. Even if the functions has a size parameter, it's recommended that you use 1 font for 1 size because changing the font size every frame drops the framerate below 30
++Temporary FPS display
+
+-->3.6.2011<--
++Added rendering functions for rect,rotRect and Point
++Added border rendering functions
++getRect() function for RotRect
++rotate() function for Rect (that way the angle is normalized)
++Render rotation for rect and screen, also scaleScreen funciton
++Color structure
+
+-->26.5.2011<--
++calculateSpeed() function change type from float to void
+
+-->23.5.2011<--
++Added collision detection for rotated rectangles
++Small fix in angles
+
+-->2.5.2011<--
++Moved function definitions to Luka.cpp
+
+-->27.4.2011<--
++Removed gfx namespace, everything is now under frm namespace
++Added point and rotatabel rectangle stuctures
++Added different consturctors for sturctures
+-Canceled the line sturcture, not really needed now, will add them later
++Minor changes in older code
++Rotation and movement now works for rotatabel rectangles 
+
+-->17.4.2011<--
++Initialization (size of window, fullscreen)
++Normal rectangle collision detection
++Angle calculation function for 2 Box-es
++X and Y speed calculation function for a given angle
++Loading texture function (using SDL_image)
++Rendering a frame from sprite function (works only on 1D sprites- for now)
++Box structure
++Event are now globalized ( frm::event )
++Functions for dinamic FPS -> setFPS(), getFPS(). delayFPS() -> is for caping at 60 FPS
+
+
+
+
