@@ -8,7 +8,6 @@ Luka Horvat, redreaper132@gmail.com
 
 int main ( int argc, char* args[] )
 {
-	//test trt
 	//Initilize the framework, false -> windowed
 	frm::initialize("Framework", 640, 480, false );
 
