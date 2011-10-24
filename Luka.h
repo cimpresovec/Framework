@@ -49,6 +49,8 @@ namespace frm
 
 		Color();
 		Color(float r, float g, float b, float a = 255);
+
+		void set(float r, float g, float b, float a = 255);
 	};
 
 	//Point structure
@@ -58,6 +60,8 @@ namespace frm
 
 		Point();
 		Point(float x, float y);
+
+		void set(float x, float y);
 	};
 
 	//Rect structure
@@ -72,10 +76,17 @@ namespace frm
 		//Normal constructor
 		Rect(float x, float y,float w, float h,float a = 0, Image* img = NULL);
 
+		//Post constructor set
+		void set(float x, float y, float w, float h, float a = 0, Image* img = NULL);
+
 		void bindImage(Image* img);
 
 		//Rotate
 		void rotate(float angle);
+
+		//Increase, decrease in px
+		void increase(float px, float py);
+		void decrease(float px, float py);
 
 	};
 

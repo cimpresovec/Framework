@@ -19,11 +19,14 @@ Main.cpp -> main game loop for testing the framework
 	-Add Box2D?!?
 
 ->Up next:
-	-Add setup functions for classed, so they can be set after 
-construciton	
-	
+	-Increase, decrease for RotRect
 
 -----CHANGELOG-----
+
+-->24.11.2011<--
++Set functions for classes, so that you can set them after construction
++Increase and decrease function for Rect, usefull this is
+
 -->20.11.2011<--
 +Comments
 

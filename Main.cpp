@@ -79,6 +79,7 @@ int main ( int argc, char* args[] )
 		A.x += 30*frm::getFPS();	//Move on X axis
 		A.y += 30*frm::getFPS();	//Move on Y axis
 		A.rotate(30*frm::getFPS()); //Rotate for 30°
+		A.increase(30*frm::getFPS(),30*frm::getFPS());
 
 		//Default clear color 
 		glClearColor(0,0,0,1);

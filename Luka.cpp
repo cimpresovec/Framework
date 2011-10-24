@@ -20,12 +20,22 @@ namespace frm
 		this->r = r; this->g = g; this->b = b; this->a = a;
 	}
 
+	void Color::set(float r, float g, float b, float a)
+	{
+		this->r = r; this->g = g; this->b = b; this->a = a;
+	}
+
 	Point::Point()
 	{
 		x = 0; y = 0;
 	}
 
 	Point::Point(float x, float y)
+	{
+		this->x = x; this->y = y;
+	}
+
+	void Point::set(float x, float y)
 	{
 		this->x = x; this->y = y;
 	}
@@ -45,6 +55,11 @@ namespace frm
 		image = img;
 	}
 
+	void Rect::set(float x, float y, float w, float h, float a, Image* img)
+	{
+		this->x = x; this->y = y; this->w = w; this->h = h; this->a = a; image = img;
+	}
+
 	void Rect::bindImage(Image* img)
 	{
 		image = img;
@@ -54,6 +69,18 @@ namespace frm
 	{
 		a += angle;
 		a = fmod(a, 360);
+	}
+
+	void Rect::increase(float px, float py)
+	{
+		x -= px/2; w += px/2;
+		y -= px/2; h += px/2;
+	}
+
+	void Rect::decrease(float px, float py)
+	{
+		x += px/2; w -= px/2;
+		y += px/2; h -= px/2;
 	}
 
 	RotRect::RotRect()
@@ -78,7 +105,7 @@ namespace frm
 
 	RotRect::~RotRect()
 	{
-		for ( int n = 0; n < edge.size(); n++ )
+		for ( int n = 0; n < (signed)edge.size(); n++ )
 		{
 			delete edge[n];
 		}
