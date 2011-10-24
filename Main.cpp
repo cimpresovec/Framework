@@ -58,6 +58,13 @@ int main ( int argc, char* args[] )
 			//play = false;
 		}
 
+		//Stress test
+		//for ( int n = 0; n < 100; n++ )
+		//{t.push_back(new frm::RotRect(&A));
+		//delete t[0];
+		//t.pop_back();
+		//}
+
 		//Rotate G, first we increase/decrease the angle, then we feed the angle to own function
 		G.angle += 30*frm::getFPS();
 		G.rotate(G.angle);	//angle is normalized
@@ -97,7 +104,7 @@ int main ( int argc, char* args[] )
 		//RENDERING PART
 		frm::startRendering();
 
-		frm::scaleScreen(0.8,1); //Scale the screen from the middle (1)
+		frm::scaleScreen(0.8f,1); //Scale the screen from the middle (1)
 
 		//Create a color for later use
 		frm::Color col(255,0,0);
@@ -126,7 +133,7 @@ int main ( int argc, char* args[] )
 		frm::stopRendering();
 
 		//Limit framerate to 60, somewhere
-		//frm::delayFPS();
+		frm::delayFPS();
 
 	}
 
