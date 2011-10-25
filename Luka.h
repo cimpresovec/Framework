@@ -10,6 +10,7 @@
 
 #define PI 3.141592654f
 #define FONT 1
+#define SOUND 1
 
 //Windows
 #if defined(WIN32) || defined(_MSC_VER)
@@ -21,6 +22,10 @@
 #include <ftgl.h>
 #endif
 
+#if SOUND
+#include <irrKlang.h>
+#endif
+
 #else
 //Unix
 #include <SDL/SDL.h>
@@ -29,6 +34,10 @@
 
 #if FONT
 #include <FTGL/ftgl.h>
+#endif
+
+#if SOUND
+//Add irrklang for linux
 #endif
 
 #endif
@@ -84,6 +93,9 @@ namespace frm
 		//Rotate
 		void rotate(float angle);
 
+		//Move
+		void move(float xx, float yy);
+
 		//Increase, decrease in px
 		void increase(float px, float py);
 		void decrease(float px, float py);
@@ -115,6 +127,10 @@ namespace frm
 
 		//Set the rectangle to a other rectangle
 		void setRect(Rect rec);
+
+		//Increase, decrease in px
+		void increase(float px, float py);
+		void decrease(float px, float py);
 
 		//Get rect
 		Rect* getRect();
@@ -149,6 +165,10 @@ namespace frm
 	//Screen size
 	extern int SCREEN_WIDTH;
 	extern int SCREEN_HEIGHT;
+
+	//Framerate independent movement
+	extern bool FPS_I;
+	void setFPS_I(bool s);
 
 	//initialize SDL, OpenGL, Fmod
 	bool initialize(std::string caption, int width, int height, bool fullScreen);
@@ -214,6 +234,13 @@ namespace frm
 	void renderText(const std::string &text, FTGLTextureFont* font, float size, float x, float y, Color color);
 
 #endif
+#if SOUND
+	//irrKlang
+	extern irrklang::ISoundEngine* engine;
+
+	irrklang::ISoundSource* loadSound(const std::string &file);
+#endif
+
 }
 
 #endif

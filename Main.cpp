@@ -9,16 +9,20 @@ Luka Horvat, redreaper132@gmail.com
 int main ( int argc, char* args[] )
 {
 	//Initilize the framework, false -> windowed
-	//Some comment
 	frm::initialize("Framework", 640, 480, false );
+
+	//Irrklang, first load music into object then play with play2D
+	irrklang::ISoundSource* sound = frm::loadSound("back.mp3");
+	frm::engine->play2D(sound,true);
 
 	//Create image and load file into it
 	frm::Image img;
 	img.loadImage("pad.png");
 
-	//Create rects, first one has image binded to it
+	//Create rects, first one has image binded to it, second one uses post constructor function
 	frm::Rect A(50,50,50,50,0,&img); //Rect, with binded image to it
-	frm::Rect B(400,50,150,120,0);
+	frm::Rect B;
+	B.set(400,50,150,120,0);
 
 	//Create 2 rotRect with rects as base, after the construction there is no connection with Rect and RotRect
 	frm::RotRect G(&A); //Rectangles, that are point based
@@ -58,28 +62,20 @@ int main ( int argc, char* args[] )
 			//play = false;
 		}
 
-		//Stress test
-		//for ( int n = 0; n < 100; n++ )
-		//{t.push_back(new frm::RotRect(&A));
-		//delete t[0];
-		//t.pop_back();
-		//}
-
-		//Rotate G, first we increase/decrease the angle, then we feed the angle to own function
-		G.angle += 30*frm::getFPS();
-		G.rotate(G.angle);	//angle is normalized
-		G.move(60*frm::getFPS(),30*frm::getFPS()); //Move G on x and y axis
+		//Rotate G and move it
+		G.rotate(30);	//angle is normalized
+		G.move(60,30); //Move G on x and y axis*/
+		G.increase(0,30); //Increase in size on y axis
 
 		//Rotation and movement of H RotRect
-		H.angle -= 180*frm::getFPS();
-		H.rotate(H.angle);
-		H.move(-20*frm::getFPS(),40*frm::getFPS());
+		H.rotate(-180);
+		H.move(-20,40);
+		H.decrease(5,5); //Decrease rotRect in size
 
 		//Move and rotate A
-		A.x += 30*frm::getFPS();	//Move on X axis
-		A.y += 30*frm::getFPS();	//Move on Y axis
-		A.rotate(30*frm::getFPS()); //Rotate for 30°
-		A.increase(30*frm::getFPS(),30*frm::getFPS());
+		A.move(30,30);
+		A.rotate(30); //Rotate for 30°
+		A.increase(15,15); //Icrease rect
 
 		//Default clear color 
 		glClearColor(0,0,0,1);
@@ -137,6 +133,9 @@ int main ( int argc, char* args[] )
 		frm::delayFPS();
 
 	}
+
+	//Irrklang
+	frm::engine->drop();
 
 	//Quit SQL
 	SDL_Quit();

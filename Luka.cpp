@@ -9,6 +9,11 @@ namespace frm
 	float FPS_A = 0;
 	int SCREEN_WIDTH = 0;
 	int SCREEN_HEIGHT = 0;
+	bool FPS_I = true;
+
+#if SOUND
+	irrklang::ISoundEngine* engine = NULL;
+#endif
 
 	Color::Color()
 	{
@@ -67,20 +72,38 @@ namespace frm
 
 	void Rect::rotate(float angle)
 	{
-		a += angle;
+		float k = getFPS();
+		if ( !FPS_I ) k = 1;
+
+		a += angle*k;
 		a = fmod(a, 360);
+	}
+
+	void Rect::move(float xx, float yy)
+	{
+		float k = getFPS();
+		if ( !FPS_I ) k = 1;
+
+		x += xx*k;
+		y += yy*k;
 	}
 
 	void Rect::increase(float px, float py)
 	{
-		x -= px/2; w += px/2;
-		y -= px/2; h += px/2;
+		float k = getFPS();
+		if ( !FPS_I ) k = 1;
+
+		x -= px/2*k; w += px*k;
+		y -= py/2*k; h += py*k;
 	}
 
 	void Rect::decrease(float px, float py)
 	{
-		x += px/2; w -= px/2;
-		y += px/2; h -= px/2;
+		float k = getFPS();
+		if ( !FPS_I ) k = 1;
+
+		x += px/2*k; w -= px*k;
+		y += py/2*k; h -= py*k;
 	}
 
 	RotRect::RotRect()
@@ -117,19 +140,51 @@ namespace frm
 
 	void RotRect::move(float xVel, float yVel)
 	{
-		for ( int n = 0; n < edge.size(); n++ )
+		float k = getFPS();
+		if ( !FPS_I ) k = 1;
+
+		for ( int n = 0; n < (signed)edge.size(); n++ )
 		{
-			edge[n]->x += xVel;
-			edge[n]->y += yVel;
+			edge[n]->x += xVel*k;
+			edge[n]->y += yVel*k;
 		}
 
-		rect->x += xVel;
-		rect->y += yVel;
+		rect->x += xVel*k;
+		rect->y += yVel*k;
+	}
+
+	void RotRect::increase(float px, float py)
+	{
+		float k = getFPS();
+		if ( !FPS_I ) k = 1;
+
+		edge[0]->x -= px/2*k; edge[0]->y -= py/2*k;
+		edge[1]->x += px/2*k; edge[1]->y -= py/2*k;
+		edge[2]->x -= px/2*k; edge[2]->y += py/2*k;
+		edge[3]->x += px/2*k; edge[3]->y += py/2*k;
+
+		rect->increase(px,py);
+	}
+
+	void RotRect::decrease(float px, float py)
+	{
+		float k = getFPS();
+		if ( !FPS_I ) k = 1;
+
+		edge[0]->x += px/2*k; edge[0]->y += py/2*k;
+		edge[1]->x -= px/2*k; edge[1]->y += py/2*k;
+		edge[2]->x += px/2*k; edge[2]->y -= py/2*k;
+		edge[3]->x -= px/2*k; edge[3]->y -= py/2*k;
+
+		rect->decrease(px,py);
 	}
 
 	void RotRect::rotate(float ang)
 	{
-		angle = ang;//Set current angle
+		float k = getFPS();
+		if ( !FPS_I ) k = 1;
+
+		angle += ang*k;
 
 		angle = fmod(angle,360); //Normalize
 
@@ -344,7 +399,17 @@ namespace frm
 		SCREEN_WIDTH = width;
 		SCREEN_HEIGHT = height;
 
+#if SOUND
+		//IrrKlang
+		engine = irrklang::createIrrKlangDevice();
+#endif
+
 		return true;
+	}
+
+	void setFPS_I(bool s)
+	{
+		FPS_I = s;
 	}
 
 	float getFPS()
@@ -354,14 +419,14 @@ namespace frm
 
 	void setFPS()
 	{
-		FPS_A = SDL_GetTicks();
+		FPS_A = (float)SDL_GetTicks();
 	}
 
 	void delayFPS()
 	{
 		if ( (SDL_GetTicks() - FPS_A) < 1000.00/60.00 )
 		{
-			SDL_Delay( ( 1000.f/60.f ) - (SDL_GetTicks() - FPS_A ) );
+			SDL_Delay( ( (1000.f/60.f) ) - ((float)SDL_GetTicks() - FPS_A ) );
 		}
 	}
 
@@ -386,7 +451,7 @@ namespace frm
 		else if ( Bx == Ax && By < Ay ) angle = 270;
 
 		//If boxes are not alignes on x or y axis then calculate angle
-		if ( !(angle == 1) ) return angle;
+		if ( !(angle == 1) ) return (float)angle;
 
 		//Calculate sides
 		sideA = Bx - Ax;
@@ -404,7 +469,7 @@ namespace frm
 		else if ( By < Ay && Bx < Ax ) angle += 180;
 		else if ( By < Ay && Bx > Ax ) angle = 360 - angle;
 
-		return angle;
+		return (float)angle;
 	}
 
 	void calculateSpeed( float angle, float xSpeed, float* x, float* y )
@@ -826,6 +891,16 @@ namespace frm
 	}
 
 #endif
+
+#ifdef SOUND
+	//IrrKlang
+	//Load sound
+	irrklang::ISoundSource* loadSound(const std::string &file)
+	{
+		return engine->addSoundSourceFromFile(file.c_str(),irrklang::ESM_AUTO_DETECT,true);
+	}
+#endif
+
 }
 
 

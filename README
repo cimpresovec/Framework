@@ -2,26 +2,48 @@ A C++ SDL/OpenGL/FMOD?/Box2D? Framework
 Started by Luka Horvat (redreaper132(at)gmail.com)
 Framework start date: April 2011
 
-Currently works on Windows/Linux.
+Currently works on Windows/Linux(sound not tested).
 
 -----FILES-----
 Luka.h -> framework header file
 Luka.cpp -> framework file
 Main.cpp -> main game loop for testing the framework
 
+For compiling you need folowing libraries:
+SDL, SDL_image, OpenGL(probably already on your OS)
+FONT: freetype2, ftgl
+SOUND: irrKlang
+
+Linker dependencies:
+Visual Studio:
+	SDLmain.lib; SDL.lib; SDL_image.lib; opengl32.lib; glu32.lib; ftgl.lib; freetype.lib; irrklang.lib
+
+GCC/Mingw(not tested):
+	-lSDLmain; -lSDL; -lSDL_image; -lopengl32; -lglu32.lib; -lftgl; -lfreetype; -lirrklang
+
+NOTE: Make sure you have a font ("FreeMono.ttf") in you project or the program will crash. If you don't
+want to use fonts remove font loading and renderText() function. Remove anything irrKlang based to work
+without sound. You can set FONT or SOUND to 0 in Luka.h if you don't want to compile with those things.
+
 -----TODO-----
 
 ->Global:
-	-Add FMOD EX to initialization ( I only know the old FMOD 3 )
-	-Add a loading function for sounds and music if needed
 	-Make better sprite rendering function (2D sprites)
 	-Ask people what to add -> profit? :D
 	-Add Box2D?!?
 
 ->Up next:
-	-Increase, decrease for RotRect
+	-Don't know yet
 
 -----CHANGELOG-----
+-->25.11.2011<--
++Increase & decrease functions for RotRect
++Better rotate function for RotRect
++FPS_I and setFPS_I() for turning build in frame independent movement on/off
++All moving, rotating, size increase/decrease functions now have build in FPS independent handling (no more *frm::getFps() when calling them)
++Added irrKlang library into the framework, sound works
++loadSound() function for loading sounds/music
++irrKlangs main "engine" is part of frm namespace
 
 -->24.11.2011<--
 +Set functions for classes, so that you can set them after construction
